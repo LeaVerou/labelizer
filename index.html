@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Labelizer</title>
+	<link rel="stylesheet" href="style.css">
+
+	<script type="importmap">
+		{
+			"imports": {
+				"yaml": "../node_modules/yaml/browser/index.js",
+				"smol-toml": "../node_modules/smol-toml/dist/index.js"
+			}
+		}
+	</script>
+	<script type="module" src="js/index.js"></script>
+</head>
+<body>
+	<header>
+		<h1>Labelizer</h1>
+		<p>Manage GitHub labels</p>
+		<madata-auth :backend="firstBackend"></madata-auth>
+	</header>
+	<main>
+		<section class="repo" v-for="name, repoIndex of repoNames">
+			<header>
+				<form @submit.prevent="load(name)">
+					<label>
+						github.com/<input type="text" v-model="repoNames[repoIndex]">
+					</label>
+				</form>
+
+				{{ labels[name]?.length }} labels
+				<button :disabled="!firstBackend?.user || !labels[name]?.backend" @click="labels[name]?.save()">Save</button>
+				Colors:
+				<button v-for="color of labels[name].colors">
+					<span class="swatch" :style="{ '--color': '#' + label.color }"></span>
+				</button>
+			</header>
+
+			<ul class="labels">
+				<li v-for="(label, labelIndex) of labels[name]">
+					<div class="label-info">
+						<span class="label" :style="{ '--color': '#' + label.color }"><input v-model="label.name" /></span>
+						<small class="description">{{ label.description }}</small>
+					</div>
+
+					<div class="controls">
+						<button v-if="repoIndex > 0" @click="copyTo(labelIndex, repoIndex, repoIndex - 1)" :title="'Copy to ' + repos[repoIndex - 1].repo">←</button>
+						<button @click="labels[name].duplicate(labelIndex)">+</button>
+						<button @click="labels[name].splice(labelIndex, 1)">x</button>
+						<button v-if="repoIndex < repos.length - 1" @click="copyTo(labelIndex, repoIndex, repoIndex + 1)" :title="'Copy to ' + repos[repoIndex + 1].repo">→</button>
+					</div>
+				</li>
+			</ul>
+			<!-- <pre><code>{{ dump(labelsByRepo[repo.repo]) }}</code></pre> -->
+		</section>
+	</main>
+</body>
+</html>

@@ -1,0 +1,79 @@
+html {
+	font: 100%/1.5 system-ui;
+	min-height: 100vh;
+}
+
+textarea:invalid {
+	border-color: #c00;
+	background: #fee;
+}
+
+body {
+	min-height: 100vh;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 1em;
+}
+
+body > header {
+	h1, p {
+		margin: 0;
+	}
+}
+
+body > main {
+	display: flex;
+	gap: .5rem;
+
+	> section {
+		flex: 1;
+	}
+}
+
+.repo {
+	label {
+		> small {
+			display: block;
+		}
+	}
+}
+
+.labels {
+	list-style: none;
+
+	> li {
+		display: flex;
+		margin-block: 1em;
+
+		.label-info {
+			flex: 1;
+		}
+
+		small {
+			display: block;
+		}
+	}
+}
+
+.label {
+	display: inline-block;
+	background: var(--color);
+	--y-threshold: 0.36;
+	--y: clamp(0, (var(--y-threshold) / y - 1) * infinity, 1);
+	color: color(from var(--color) xyz-d65 var(--y) var(--y) var(--y));
+
+	padding: .25em .5em;
+	border-radius: .25em;
+
+	input {
+		all: unset;
+		field-sizing: content;
+		min-width: 2ch;
+	}
+}
+
+.controls {
+	display: flex;
+	gap: .2em;
+	align-items: start;
+}
