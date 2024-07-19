@@ -16,11 +16,11 @@ export default class RepoLabels extends Array {
 	}
 
 	get colors () {
-		if (!this.labels) {
+		if (!this.length) {
 			return [];
 		}
 
-		return new Set(this.labels.map(l => l.color));
+		return new Set(this.map(l => l.color));
 	}
 
 	save () {

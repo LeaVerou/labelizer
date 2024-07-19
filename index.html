@@ -47,10 +47,10 @@
 					</div>
 
 					<div class="controls">
-						<button v-if="repoIndex > 0" @click="copyTo(labelIndex, repoIndex, repoIndex - 1)" :title="'Copy to ' + repos[repoIndex - 1].repo">←</button>
+						<button v-if="repoIndex > 0" @click="copyTo(labelIndex, repoIndex, repoIndex - 1)" :title="'Copy to ' + repoNames[repoIndex - 1].repo">←</button>
 						<button @click="labels[name].duplicate(labelIndex)">+</button>
 						<button @click="labels[name].splice(labelIndex, 1)">x</button>
-						<button v-if="repoIndex < repos.length - 1" @click="copyTo(labelIndex, repoIndex, repoIndex + 1)" :title="'Copy to ' + repos[repoIndex + 1].repo">→</button>
+						<button v-if="repoIndex < repoNames.length - 1" @click="copyTo(labelIndex, repoIndex, repoIndex + 1)" :title="'Copy to ' + repoNames[repoIndex + 1].repo">→</button>
 					</div>
 				</li>
 			</ul>
