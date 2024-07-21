@@ -6,7 +6,7 @@ globalThis.app = createApp({
 	data () {
 		let ret = {
 			repoNames: [
-				"leaverou/bafr",
+				"leaverou/brep",
 				"madatajs/madata",
 			],
 			labels: {},
