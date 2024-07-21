@@ -10,13 +10,13 @@ export default class RepoLabels extends Array {
 			// Ensure we create actual backends and do not perform any array operation (map, splice, etc.) while working with an instance of this class
 			this.name = name;
 			this.backend = backends[name] ?? new Backend(`https://github.com/${name}/labels`, options);
-
-			this.backend.load().then(d => {
-				for (let label of d) {
-					this.push(label);
-				}
-			});
 		}
+	}
+
+	init () {
+		this.backend.load().then(labels => {
+			this.push(...labels)
+		});
 	}
 
 	get colors () {
