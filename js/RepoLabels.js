@@ -7,6 +7,7 @@ export default class RepoLabels extends Array {
 		super();
 
 		if (options) {
+			// Ensure we create actual backends and do not perform any array operation (map, splice, etc.) while working with an instance of this class
 			this.name = name;
 			this.backend = backends[name] ?? new Backend(`https://github.com/${name}/labels`, options);
 
