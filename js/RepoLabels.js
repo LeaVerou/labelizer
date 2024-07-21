@@ -5,14 +5,18 @@ let backends = {};
 export default class RepoLabels extends Array {
 	constructor(name, options) {
 		super();
-		this.name = name;
-		this.backend = backends[name] ?? new Backend(`https://github.com/${name}/labels`, options);
 
-		this.backend.load().then(d => {
-			for (let label of d) {
-				this.push(label);
-			}
-		});
+		if (options) {
+			this.name = name;
+			this.backend = backends[name] ?? new Backend(`https://github.com/${name}/labels`, options);
+
+			this.backend.load().then(d => {
+				this.push(...d);
+				backends[name] = this.backend;
+
+				options.context?.$forceUpdate();
+			});
+		}
 	}
 
 	get colors () {
