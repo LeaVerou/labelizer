@@ -35,7 +35,7 @@
 				<button :disabled="!firstBackend?.user || !labels[name]?.backend" @click="labels[name]?.save()">Save</button>
 				Colors:
 				<button v-for="color of labels[name]?.colors">
-					<span class="swatch" :style="{ '--color': '#' + label.color }"></span>
+					<span class="swatch" :style="{ '--color': '#' + color }"></span>
 				</button>
 			</header>
 
