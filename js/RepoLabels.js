@@ -17,7 +17,7 @@ export default class RepoLabels extends Array {
 		// Move all side effects outside “constructor()” to make the Vue reactivity system work:
 		// “this” should be bound to the reactive Proxy object, not the original one
 		this.backend.load().then(labels => {
-			this.push(...labels)
+			this.push(...labels);
 		});
 	}
 
