@@ -12,8 +12,9 @@ export default class RepoLabels extends Array {
 			this.backend = backends[name] ?? new Backend(`https://github.com/${name}/labels`, options);
 
 			this.backend.load().then(d => {
-				this.push(...d);
-				backends[name] = this.backend;
+				for (let label of d) {
+					this.push(label);
+				}
 			});
 		}
 	}
