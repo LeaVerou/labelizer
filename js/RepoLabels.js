@@ -14,8 +14,6 @@ export default class RepoLabels extends Array {
 			this.backend.load().then(d => {
 				this.push(...d);
 				backends[name] = this.backend;
-
-				options.context?.$forceUpdate();
 			});
 		}
 	}

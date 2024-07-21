@@ -19,7 +19,7 @@ globalThis.app = createApp({
 	mounted () {
 		for (let name of this.repoNames) {
 			// this.load(name);
-			this.labels[name] = new RepoLabels(name, {syncWith: this.firstBackend, context: this});
+			this.labels[name] = new RepoLabels(name, {syncWith: this.firstBackend});
 			this.firstBackend ??= this.labels[name].backend;
 		}
 	},
@@ -41,7 +41,7 @@ globalThis.app = createApp({
 
 		load (name) {
 			if (!this.labels[name]) {
-				this.labels[name] = new RepoLabels(name, {syncWith: this.firstBackend, context: this});
+				this.labels[name] = new RepoLabels(name, {syncWith: this.firstBackend});
 				this.firstBackend ??= this.labels[name].backend;
 			}
 
@@ -61,7 +61,7 @@ globalThis.app = createApp({
 			handler () {
 				for (let name of this.repoNames) {
 					if (!this.labels[name]) {
-						this.labels[name] = new RepoLabels(name, {syncWith: this.firstBackend, context: this});
+						this.labels[name] = new RepoLabels(name, {syncWith: this.firstBackend});
 						this.firstBackend ??= this.labels[name].backend;
 					}
 				}
