@@ -16,11 +16,11 @@ globalThis.app = createApp({
 		return ret;
 	},
 
-	mounted () {
+	async mounted () {
 		for (let name of this.repoNames) {
 			// this.load(name);
 			this.labels[name] = new RepoLabels(name, {syncWith: this.firstBackend});
-			this.labels[name].init();
+			await this.labels[name].init();
 			this.firstBackend ??= this.labels[name].backend;
 		}
 	},
@@ -40,10 +40,10 @@ globalThis.app = createApp({
 			return JSON.stringify(v, null, "\t");
 		},
 
-		load (name) {
+		async load (name) {
 			if (!this.labels[name]) {
 				this.labels[name] = new RepoLabels(name, {syncWith: this.firstBackend});
-				this.labels[name].init();
+				await this.labels[name].init();
 				this.firstBackend ??= this.labels[name].backend;
 			}
 
@@ -60,11 +60,11 @@ globalThis.app = createApp({
 
 	watch: {
 		repoNames: {
-			handler () {
+			async handler () {
 				for (let name of this.repoNames) {
 					if (!this.labels[name]) {
 						this.labels[name] = new RepoLabels(name, {syncWith: this.firstBackend});
-						this.labels[name].init();
+						await this.labels[name].init();
 						this.firstBackend ??= this.labels[name].backend;
 					}
 				}

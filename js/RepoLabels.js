@@ -13,12 +13,11 @@ export default class RepoLabels extends Array {
 		}
 	}
 
-	init () {
+	async init () {
 		// Move all side effects outside “constructor()” to make the Vue reactivity system work:
 		// “this” should be bound to the reactive Proxy object, not the original one
-		this.backend.load().then(labels => {
-			this.push(...labels);
-		});
+		let labels = await this.backend.load();
+		this.push(...(labels ?? []));
 	}
 
 	get colors () {
