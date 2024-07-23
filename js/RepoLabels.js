@@ -5,14 +5,19 @@ let backends = {};
 export default class RepoLabels extends Array {
 	constructor(name, options) {
 		super();
-		this.name = name;
-		this.backend = backends[name] ?? new Backend(`https://github.com/${name}/labels`, options);
 
-		this.backend.load().then(d => {
-			for (let label of d) {
-				this.push(label);
-			}
-		});
+		if (options) {
+			// Ensure we create actual backends and do not perform any array operation (map, splice, etc.) while working with an instance of this class
+			this.name = name;
+			this.backend = backends[name] ?? new Backend(`https://github.com/${name}/labels`, options);
+		}
+	}
+
+	async init () {
+		// Move all side effects outside “constructor()” to make the Vue reactivity system work:
+		// “this” should be bound to the reactive Proxy object, not the original one
+		let labels = await this.backend.load();
+		this.push(...(labels ?? []));
 	}
 
 	get colors () {
